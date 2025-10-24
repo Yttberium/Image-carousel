@@ -38,16 +38,18 @@
             overflow: hidden;
         }
 
+        /* Hide radio buttons */
+        input[type="radio"] {
+            display: none;
+        }
+
         .carousel-slide {
             position: absolute;
             width: 100%;
             height: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
+            pointer-events: none;
         }
 
         .carousel-slide img {
@@ -77,6 +79,14 @@
             letter-spacing: 1px;
         }
 
+        /* Show active slide */
+        #slide1:checked ~ .slides .carousel-slide:nth-child(1),
+        #slide2:checked ~ .slides .carousel-slide:nth-child(2),
+        #slide3:checked ~ .slides .carousel-slide:nth-child(3) {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .carousel-controls {
             position: absolute;
             top: 50%;
@@ -85,6 +95,7 @@
             justify-content: space-between;
             transform: translateY(-50%);
             padding: 0 20px;
+            z-index: 10;
         }
 
         .carousel-btn {
@@ -100,11 +111,27 @@
             justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: #333;
         }
 
         .carousel-btn:hover {
             background: white;
             transform: scale(1.1);
+        }
+
+        /* Navigation button visibility */
+        .prev-btn, .next-btn {
+            display: none;
+        }
+
+        #slide1:checked ~ .slides .prev-btn[for="slide3"],
+        #slide1:checked ~ .slides .next-btn[for="slide2"],
+        #slide2:checked ~ .slides .prev-btn[for="slide1"],
+        #slide2:checked ~ .slides .next-btn[for="slide3"],
+        #slide3:checked ~ .slides .prev-btn[for="slide2"],
+        #slide3:checked ~ .slides .next-btn[for="slide1"] {
+            display: flex;
         }
 
         .carousel-indicators {
@@ -124,7 +151,14 @@
             transition: all 0.3s ease;
         }
 
-        .indicator.active {
+        .indicator:hover {
+            background: #999;
+        }
+
+        /* Active indicator */
+        #slide1:checked ~ .carousel-indicators .indicator:nth-child(1),
+        #slide2:checked ~ .carousel-indicators .indicator:nth-child(2),
+        #slide3:checked ~ .carousel-indicators .indicator:nth-child(3) {
             background: #1e90ff;
             width: 30px;
             border-radius: 6px;
@@ -134,93 +168,63 @@
 <body>
     <div class="carousel-container">
         <div class="carousel">
-            <!-- ============================================ -->
-            <!-- EDIT YOUR IMAGES AND TITLES BELOW THIS LINE -->
-            <!-- ============================================ -->
-            
-            <!-- Slide 1 -->
-            <div class="carousel-slide active">
-                <img src="https://www.wandersmiles.com/wp-content/uploads/2024/02/Fried-Halloumi-Honey-Sesame.jpg" alt="Cyprus Beach">
-                <div class="title-box">
-                    <h2> Halloumi</h2>
+            <!-- Radio buttons to control slides -->
+            <input type="radio" name="slider" id="slide1" checked>
+            <input type="radio" name="slider" id="slide2">
+            <input type="radio" name="slider" id="slide3">
+
+            <div class="slides">
+                <!-- ============================================ -->
+                <!-- EDIT YOUR IMAGES AND TITLES BELOW THIS LINE -->
+                <!-- ============================================ -->
+                
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                    <img src="https://www.wandersmiles.com/wp-content/uploads/2024/02/Fried-Halloumi-Honey-Sesame.jpg0" alt="Cyprus Beach">
+                    <div class="title-box">
+                        <h2>Halloumi</h2>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                    <img src="https://www.wandersmiles.com/wp-content/uploads/2024/02/Greek-Salad.jpg" alt="Cyprus Coast">
+                    <div class="title-box">
+                        <h2>Kolokythokeftedes (piftele din Zucchini)</h2>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1601581987809-a874a81309c9?w=1200" alt="Cyprus Sunset">
+                    <div class="title-box">
+                        <h2>Soutzoukos</h2>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- EDIT YOUR IMAGES AND TITLES ABOVE THIS LINE -->
+                <!-- ============================================ -->
+
+                <!-- Navigation Controls -->
+                <div class="carousel-controls">
+                    <label for="slide3" class="carousel-btn prev-btn">‹</label>
+                    <label for="slide2" class="carousel-btn prev-btn">‹</label>
+                    <label for="slide1" class="carousel-btn prev-btn">‹</label>
+                    
+                    <label for="slide2" class="carousel-btn next-btn">›</label>
+                    <label for="slide3" class="carousel-btn next-btn">›</label>
+                    <label for="slide1" class="carousel-btn next-btn">›</label>
                 </div>
             </div>
 
-            <!-- Slide 2 -->
-            <div class="carousel-slide">
-                <img src="https://www.wandersmiles.com/wp-content/uploads/2024/02/Greek-Salad.jpg" alt="Cyprus Coast">
-                <div class="title-box">
-                    <h2>Salata satului cipriot</h2>
-                </div>
+            <!-- Indicator Dots -->
+            <div class="carousel-indicators">
+                <label for="slide1" class="indicator"></label>
+                <label for="slide2" class="indicator"></label>
+                <label for="slide3" class="indicator"></label>
             </div>
-
-            <!-- Slide 3 -->
-            <div class="carousel-slide">
-                <img src="https://images.unsplash.com/photo-1601581987809-a874a81309c9?w=1200" alt="Cyprus Sunset">
-                <div class="title-box">
-                    <h2>Kolokythokeftedes (piftele din Zucchini)</h2>
-                </div>
-            </div>
-
-            <!-- Slide 4 -->
-            <div class="carousel-slide">
-                <img src="https://images.unsplash.com/photo-1601581987809-a874a81309c9?w=1200" alt="Cyprus Sunset">
-                <div class="title-box">
-                    <h2>Soutzoukos</h2>
-                </div>
-            </div>
-
-            <!-- Add more slides by copying the structure above -->
-            
-            <!-- ============================================ -->
-            <!-- EDIT YOUR IMAGES AND TITLES ABOVE THIS LINE -->
-            <!-- ============================================ -->
-
-            <div class="carousel-controls">
-                <button class="carousel-btn" onclick="prevSlide()">‹</button>
-                <button class="carousel-btn" onclick="nextSlide()">›</button>
-            </div>
-        </div>
-
-        <div class="carousel-indicators">
-            <!-- Add or remove indicators to match your number of slides -->
-            <span class="indicator active" onclick="goToSlide(0)"></span>
-            <span class="indicator" onclick="goToSlide(1)"></span>
-            <span class="indicator" onclick="goToSlide(2)"></span>
         </div>
     </div>
-
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const indicators = document.querySelectorAll('.indicator');
-
-        function showSlide(n) {
-            slides[currentSlide].classList.remove('active');
-            indicators[currentSlide].classList.remove('active');
-            
-            currentSlide = (n + slides.length) % slides.length;
-            
-            slides[currentSlide].classList.add('active');
-            indicators[currentSlide].classList.add('active');
-        }
-
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
-
-        function prevSlide() {
-            showSlide(currentSlide - 1);
-        }
-
-        function goToSlide(n) {
-            showSlide(n);
-        }
-
-        // Auto-advance carousel every 5 seconds
-        setInterval(() => {
-            nextSlide();
-        }, 5000);
-    </script>
 </body>
 </html>
